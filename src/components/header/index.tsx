@@ -47,8 +47,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
               }}
             >
               {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
-            </IconButton>
-
+            </IconButton>              
             {(user?.avatar || user?.name) && (
               <Stack
                 direction="row"
