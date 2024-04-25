@@ -11,5 +11,12 @@
     },
     "table": {
         "actions": "操作"
+    },
+    "buttons": {
+        "logout": "ログアウト",
+        "create": "作成",
+        "edit": "編集",
+        "refresh": "更新"
     }
 }
+

@@ -10,6 +10,7 @@ import { dataProvider, liveProvider } from "@refinedev/supabase";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { supabaseClient } from "./utility";
 import { FoosCreate, FoosEdit, FoosList, FoosShow } from "./pages/foos";
+import { Title } from "./components/title";
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -17,6 +18,7 @@ function App() {
     /* eslint-disable @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     translate: (key: any, options?: any) => {
+      console.log(key, options)
       return t(key, options)
     },
     changeLocale: (lang: string) => i18n.changeLanguage(lang),
@@ -54,7 +56,10 @@ function App() {
                   key="authenticated-inner"
                   fallback={<CatchAllNavigate to="/login" />}
                 >
-                  <ThemedLayoutV2 Header={() => <Header />}>
+                  <ThemedLayoutV2
+                    Header={() => <Header />}
+                    Title={() => <Title />}
+                  >
                     <Outlet />
                   </ThemedLayoutV2>
                 </Authenticated>
