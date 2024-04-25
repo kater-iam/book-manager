@@ -1,20 +1,12 @@
-import React, { useEffect, useRef } from "react";
-import { Create, EditButton, useForm } from "@refinedev/antd";
+import { Create, useForm } from "@refinedev/antd";
 import { Form, Input, DatePicker } from "antd";
 import { useTranslate } from "@refinedev/core";
 import dayjs from "dayjs";
-import { useScan } from "@/hooks/useScan";
+import Scanner from "@/components/scanner";
 
 export const BooksCreate = () => {
     const translate = useTranslate();
     const { formProps, saveButtonProps, queryResult } = useForm();
-    const { setRef, isbnLoad } = useScan()
-    const ref = useRef()
-
-    useEffect(() => {
-        if (!ref) return
-        setRef(ref)
-    }, [ref])
 
     return (
         <Create saveButtonProps={saveButtonProps}>
@@ -70,12 +62,9 @@ export const BooksCreate = () => {
                     <Input />
                 </Form.Item>
             </Form>
-            {/* @ts-ignore */}
-            <div ref={ref}>
-                <EditButton onClick={() => {
-                    isbnLoad()
-                }}>カメラを起動</EditButton>
-            </div>
+            <Scanner onDetected={(result: any) => {
+                console.log(result)
+            }} />
         </Create>
     );
 };
