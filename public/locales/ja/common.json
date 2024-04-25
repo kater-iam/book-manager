@@ -1,0 +1,15 @@
+{
+    "foos": {
+        "foos": "富次郎",
+        "fields": {
+            "id": "ID",
+            "title": "タイトル"
+        },
+        "titles": {
+            "list": "富次郎１"
+        }
+    },
+    "table": {
+        "actions": "操作"
+    }
+}
