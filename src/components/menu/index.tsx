@@ -6,7 +6,7 @@ export const Menu = () => {
   const { menuItems } = useMenu();
 
   return (
-    <nav className="menu">      
+    <nav className="menu">
       <ul>
         {menuItems.map((item) => (
           <li key={item.key}>

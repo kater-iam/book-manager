@@ -10,13 +10,11 @@
     "@refinedev/devtools": "^1.1.32",
     "@refinedev/inferencer": "^4.6.0",
     "@refinedev/kbar": "^1.3.6",
-    "@refinedev/react-hook-form": "^4.8.16",
     "@refinedev/react-router-v6": "^4.5.5",
-    "@refinedev/react-table": "^5.6.8",
     "@refinedev/supabase": "^5.7.4",
     "i18next": "^23.11.2",
     "i18next-browser-languagedetector": "^7.2.1",
-    "i18next-xhr-backend": "^3.2.2",
+    "i18next-http-backend": "^2.5.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-i18next": "^14.1.1",
@@ -54,6 +52,6 @@
     ]
   },
   "refine": {
-    "projectId": "72rBOh-cCAa38-slnLFB"
+    "projectId": "45VCnM-1kez3C-I7s8dD"
   }
 }
