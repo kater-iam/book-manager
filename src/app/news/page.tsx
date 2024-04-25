@@ -2,6 +2,7 @@
 
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {
+  DateField,
   DeleteButton,
   EditButton,
   List,
@@ -10,8 +11,13 @@ import {
 } from "@refinedev/mui";
 import React from "react";
 
-export default function NewsList() {
-  const { dataGridProps } = useDataGrid({});
+export default function NewsPostList() {
+  const { dataGridProps } = useDataGrid({
+    syncWithLocation: true,
+    meta: {
+      select: "*",
+    },
+  });
 
   const columns = React.useMemo<GridColDef[]>(
     () => [
@@ -32,6 +38,15 @@ export default function NewsList() {
         flex: 1,
         headerName: "Status",
         minWidth: 200,
+      },
+      {
+        field: "createdAt",
+        flex: 1,
+        headerName: "Created at",
+        minWidth: 250,
+        renderCell: function render({ value }) {
+          return <DateField value={value} />;
+        },
       },
       {
         field: "actions",

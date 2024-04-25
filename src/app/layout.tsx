@@ -9,6 +9,7 @@ import React, { Suspense } from "react";
 import { ColorModeContextProvider } from "@contexts/color-mode";
 import { authProvider } from "@providers/auth-provider";
 import { dataProvider } from "@providers/data-provider";
+import { DevtoolsProvider } from "@refinedev/devtools";
 
 export const metadata: Metadata = {
   title: "Refine test",
@@ -34,46 +35,48 @@ export default function RootLayout({
           <RefineKbarProvider>
             <ColorModeContextProvider defaultMode={defaultMode}>
               <RefineSnackbarProvider>
-                <Refine
-                  routerProvider={routerProvider}
-                  authProvider={authProvider}
-                  dataProvider={dataProvider}
-                  notificationProvider={notificationProvider}
-                  resources={[{
-                    name: "blog_posts",
-                    list: "/blog-posts",
-                    create: "/blog-posts/create",
-                    edit: "/blog-posts/edit/:id",
-                    show: "/blog-posts/show/:id",
-                    meta: {
-                      canDelete: true,
-                    },
-                  }, {
-                    name: "categories",
-                    list: "/categories",
-                    create: "/categories/create",
-                    edit: "/categories/edit/:id",
-                    show: "/categories/show/:id",
-                    meta: {
-                      canDelete: true,
-                    },
-                  }, {
-                    name: "news",
-                    list: "/news",
-                    create: "/news/create",
-                    edit: "/news/edit/:id",
-                    show: "/news/show/:id"
-                  }]}
-                  options={{
-                    syncWithLocation: true,
-                    warnWhenUnsavedChanges: true,
-                    useNewQueryKeys: true,
-                    projectId: "GO9M85-U15NmW-f6FdXN",
-                  }}
-                >
-                  {children}
-                  <RefineKbar />
-                </Refine>
+                <DevtoolsProvider>
+                  <Refine
+                    routerProvider={routerProvider}
+                    authProvider={authProvider}
+                    dataProvider={dataProvider}
+                    notificationProvider={notificationProvider}
+                    resources={[{
+                      name: "blog_posts",
+                      list: "/blog-posts",
+                      create: "/blog-posts/create",
+                      edit: "/blog-posts/edit/:id",
+                      show: "/blog-posts/show/:id",
+                      meta: {
+                        canDelete: true,
+                      },
+                    }, {
+                      name: "categories",
+                      list: "/categories",
+                      create: "/categories/create",
+                      edit: "/categories/edit/:id",
+                      show: "/categories/show/:id",
+                      meta: {
+                        canDelete: true,
+                      },
+                    }, {
+                      name: "news",
+                      list: "/news",
+                      create: "/news/create",
+                      edit: "/news/edit/:id",
+                      show: "/news/show/:id"
+                    }]}
+                    options={{
+                      syncWithLocation: true,
+                      warnWhenUnsavedChanges: true,
+                      useNewQueryKeys: true,
+                      projectId: "GO9M85-U15NmW-f6FdXN",
+                    }}
+                  >
+                    {children}
+                    <RefineKbar />
+                  </Refine>
+                </DevtoolsProvider>
               </RefineSnackbarProvider>
             </ColorModeContextProvider>
           </RefineKbarProvider>
