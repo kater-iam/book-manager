@@ -1,5 +1,5 @@
 import { AntdInferencer } from "@refinedev/inferencer/antd";
 
-export const FoosList = () => {
+export const BooksEdit = () => {
     return <AntdInferencer />;
 };

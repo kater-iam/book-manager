@@ -9,8 +9,9 @@ import routerBindings, { CatchAllNavigate, DocumentTitleHandler, NavigateToResou
 import { dataProvider, liveProvider } from "@refinedev/supabase";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { supabaseClient } from "./utility";
-import { FoosCreate, FoosEdit, FoosList, FoosShow } from "./pages/foos";
 import { Title } from "./components/title";
+import { BooksCreate, BooksEdit, BooksList, BooksShow } from "./pages/books";
+import { LendingsCreate, LendingsEdit, LendingsList, LendingsShow } from "./pages/lendings";
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -18,7 +19,6 @@ function App() {
     /* eslint-disable @typescript-eslint/ban-ts-comment */
     // @ts-ignore
     translate: (key: any, options?: any) => {
-      console.log(key, options)
       return t(key, options)
     },
     changeLocale: (lang: string) => i18n.changeLanguage(lang),
@@ -39,14 +39,20 @@ function App() {
             warnWhenUnsavedChanges: true,
             useNewQueryKeys: true,
             projectId: "45VCnM-1kez3C-I7s8dD",
-            liveMode: "auto"
+            liveMode: "auto",
           }}
           resources={[{
-            name: "foos",
-            list: "/foos",
-            create: "/foos/create",
-            edit: "/foos/edit/:id",
-            show: "/foos/show/:id"
+            name: "books",
+            list: "/books",
+            create: "/books/create",
+            edit: "/books/edit/:id",
+            show: "/books/show/:id"
+          }, {
+            name: "lendings",
+            list: "/lendings",
+            create: "/lendings/create",
+            edit: "/lendings/edit/:id",
+            show: "/lendings/show/:id"
           }]}>
           <Routes>
 
@@ -65,14 +71,20 @@ function App() {
                 </Authenticated>
               }
             >
-              <Route path="/foos">
-                <Route index element={<FoosList />} />
-                <Route path="create" element={<FoosCreate />} />
-                <Route path="edit/:id" element={<FoosEdit />} />
-                <Route path="show/:id" element={<FoosShow />} />
+              <Route path="/books">
+                <Route index element={<BooksList />} />
+                <Route path="create" element={<BooksCreate />} />
+                <Route path="edit/:id" element={<BooksEdit />} />
+                <Route path="show/:id" element={<BooksShow />} />
               </Route>
-            </Route>
+              <Route path="/lendings">
+                <Route index element={<LendingsList />} />
+                <Route path="create" element={<LendingsCreate />} />
+                <Route path="edit/:id" element={<LendingsEdit />} />
+                <Route path="show/:id" element={<LendingsShow />} />
+              </Route>
 
+            </Route>
 
             <Route index element={<WelcomePage />} />
             <Route

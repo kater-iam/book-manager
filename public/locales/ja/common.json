@@ -1,12 +1,34 @@
 {
-    "foos": {
-        "foos": "富次郎",
+    "books": {
+        "books": "貸出可能書籍",
         "fields": {
             "id": "ID",
-            "title": "タイトル"
+            "name": "書籍名",
+            "isbn": "バーコード",
+            "created_at": "登録日",
+            "updated_at": "更新日"
         },
         "titles": {
-            "list": "富次郎１"
+            "list": "貸出可能書籍",
+            "edit": "書籍を編集",
+            "create": "書籍を追加",
+            "refresh": "書籍を更新"
+        }
+    },
+    "lendings": {
+        "lendings": "貸出履歴",
+        "fields": {
+            "id": "ID",
+            "book_id": "書籍名",
+            "created_at": "登録日",
+            "returned_at": "返却日",
+            "updated_at": "更新日"
+        },
+        "titles": {
+            "list": "貸出履歴",
+            "edit": "貸出履歴を編集",
+            "create": "貸出履歴を追加",
+            "refresh": "貸出履歴を更新"
         }
     },
     "table": {
@@ -14,9 +36,8 @@
     },
     "buttons": {
         "logout": "ログアウト",
-        "create": "作成",
-        "edit": "編集",
-        "refresh": "更新"
+        "create": "書籍を追加",
+        "edit": "書籍を編集",
+        "refresh": "書籍を更新"
     }
 }
-
