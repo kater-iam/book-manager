@@ -70,6 +70,7 @@ export const BooksCreate = () => {
                     <Input />
                 </Form.Item>
             </Form>
+            {/* @ts-ignore */}
             <div ref={ref}>
                 <EditButton onClick={() => {
                     isbnLoad()

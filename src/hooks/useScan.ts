@@ -1,10 +1,11 @@
+// @ts-ignore
 import Quagga from 'quagga'
 import { useEffect, useState } from 'react'
 
 export const useScan = () => {
     const [barcode, setBarcode] = useState<string | null>(null)
-    const [ref, setRef] = useState<React.MutableRefObject<HTMLCanvasElement> | null>(null)
-    
+    const [ref, setRef] = useState<any>(null)
+
     useEffect(() => {
         if (!ref) return
         console.log('load')
@@ -21,7 +22,7 @@ export const useScan = () => {
             decoder: {
                 readers: ["code_128_reader"]
             }
-        }, function (err) {            
+        }, function (err: any) {
             if (err) {
                 console.log(err);
                 return
@@ -29,7 +30,7 @@ export const useScan = () => {
             console.log("Initialization finished. Ready to start");
             Quagga.start();
         })
-        
+
     }
 
     return {
