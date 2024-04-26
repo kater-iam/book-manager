@@ -18,7 +18,7 @@ function App() {
   const i18nProvider: I18nProvider = {
     /* eslint-disable @typescript-eslint/ban-ts-comment */
     // @ts-ignore 
-    translate: (key: any, options?: any) => {      
+    translate: (key: any, options?: any) => {
       return t(key, options)
     },
     changeLocale: (lang: string) => i18n.changeLanguage(lang),
@@ -64,7 +64,7 @@ function App() {
                 >
                   <ThemedLayoutV2
                     Header={() => <Header />}
-                    Title={() => <Title />}
+                    Title={({ collapsed }) => <Title collapsed={collapsed} />}
                   >
                     <Outlet />
                   </ThemedLayoutV2>

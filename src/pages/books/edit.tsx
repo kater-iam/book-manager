@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Edit, useForm } from "@refinedev/antd";
 import { Form, Input, DatePicker } from "antd";
 import { useTranslate } from "@refinedev/core";
@@ -9,6 +9,10 @@ export const BooksEdit = () => {
     const { formProps, saveButtonProps, queryResult } = useForm();
 
     const booksData = queryResult?.data?.data;
+
+    useEffect(() => {
+        formProps?.form?.setFieldsValue({ updated_at: dayjs() })
+    }, [formProps?.form])
 
     return (
         <Edit saveButtonProps={saveButtonProps}>
@@ -34,20 +38,6 @@ export const BooksEdit = () => {
                     ]}
                 >
                     <Input />
-                </Form.Item>
-                <Form.Item
-                    label={translate("books.fields.updated_at")}
-                    name={["updated_at"]}
-                    rules={[
-                        {
-                            required: true,
-                        },
-                    ]}
-                    getValueProps={(value) => ({
-                        value: value ? dayjs(value) : undefined,
-                    })}
-                >
-                    <DatePicker />
                 </Form.Item>
                 <Form.Item
                     label={translate("books.fields.created_at")}
