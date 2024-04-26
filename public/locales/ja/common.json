@@ -62,7 +62,8 @@
             "name": "書籍名",
             "isbn": "バーコード",
             "created_at": "登録日",
-            "updated_at": "更新日"
+            "updated_at": "更新日",
+            "serial_number": "タグ番号"
         },
         "titles": {
             "list": "書籍一覧",

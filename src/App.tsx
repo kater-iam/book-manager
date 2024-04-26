@@ -13,6 +13,8 @@ import { Title } from "./components/title";
 import { BooksCreate, BooksEdit, BooksList, BooksShow } from "./pages/books";
 import { LendingsCreate, LendingsEdit, LendingsList, LendingsShow } from "./pages/lendings";
 import { Header } from "./components/header";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -69,6 +71,7 @@ function App() {
                     Title={({ collapsed }) => <Title collapsed={collapsed} />}
                   >
                     <Outlet />
+                    <ToastContainer />
                   </ThemedLayoutV2>
                 </Authenticated>
               }

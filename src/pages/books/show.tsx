@@ -28,6 +28,8 @@ export const BooksShow = () => {
             <DateField value={record?.created_at} format="YYYY.MM.DD" />
             <Title level={5}>{translate("books.fields.isbn")}</Title>
             <TextField value={record?.isbn ?? ""} />
+            <Title level={5}>{translate("books.fields.serial_number")}</Title>
+            <TextField value={record?.serial_number ?? ""} />
         </Show>
     );
 };

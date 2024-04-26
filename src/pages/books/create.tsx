@@ -5,17 +5,24 @@ import dayjs from "dayjs";
 import Scanner from "@/components/scanner";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { NfcButton } from "@/components/nfcButton";
 
 export const BooksCreate = () => {
     const translate = useTranslate();
     const { formProps, saveButtonProps } = useForm();
     const [isbn, setIsbn] = useState<string>("")
     const [isShowScanner, setIsShowScanner] = useState<boolean>(false)
+    const [serialNumber, setSerialNumber] = useState<string>("")
 
     useEffect(() => {
         formProps?.form?.setFieldsValue({ updated_at: dayjs() })
         formProps?.form?.setFieldsValue({ created_at: dayjs() })
     }, [formProps?.form])
+
+    useEffect(() => {
+        if (!serialNumber) return
+        formProps?.form?.setFieldsValue({ serial_number: serialNumber })
+    }, [serialNumber, formProps?.form])
 
     useEffect(() => {
         if (!isbn) return
@@ -43,14 +50,14 @@ export const BooksCreate = () => {
         <Create saveButtonProps={saveButtonProps}>
             {isShowScanner && <Scanner onDetected={(result: any) => setIsbn(result)} />}
 
-            <ShowButton
-                onClick={() => setIsShowScanner(!isShowScanner)}
-                style={{ margin: '0 auto 20px auto', display: 'block' }}
-            >
-                カメラを起動
-            </ShowButton>
-
             <Form {...formProps} layout="vertical">
+                <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
+                    <ShowButton onClick={() => setIsShowScanner(!isShowScanner)}>
+                        カメラ起動
+                    </ShowButton>
+                    <NfcButton setSerialNumber={setSerialNumber} />
+                </div>
+
                 <Form.Item
                     label={translate("books.fields.name")}
                     name={["name"]}
@@ -65,6 +72,14 @@ export const BooksCreate = () => {
                 >
                     <Input />
                 </Form.Item>
+                <Form.Item
+                    label={translate("books.fields.serial_number")}
+                    name={["serial_number"]}
+                    rules={[{ required: true, },]}
+                >
+                    <Input />
+                </Form.Item>
+
             </Form>
         </Create >
     );

@@ -90,6 +90,12 @@ export const BooksEdit = () => {
                 >
                     <Input />
                 </Form.Item>
+                <Form.Item
+                    label={translate("books.fields.serial_number")}
+                    name={["serial_number"]}
+                >
+                    <Input />
+                </Form.Item>
             </Form>
         </Edit>
     );
