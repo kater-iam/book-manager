@@ -44,7 +44,7 @@
         }
     },
     "books": {
-        "books": "貸出可能書籍",
+        "books": "書籍",
         "fields": {
             "id": "ID",
             "name": "書籍名",
@@ -53,7 +53,7 @@
             "updated_at": "更新日"
         },
         "titles": {
-            "list": "貸出可能書籍一覧",
+            "list": "書籍一覧",
             "edit": "書籍を編集",
             "create": "書籍を追加",
             "show": "書籍詳細",

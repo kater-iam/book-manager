@@ -5,6 +5,11 @@ import { useTranslate } from "@refinedev/core";
 import dayjs from "dayjs";
 import { useDocumentTitle } from "@refinedev/react-router-v6";
 import { config } from "@/config";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const BooksEdit = () => {
     const translate = useTranslate();
@@ -14,7 +19,8 @@ export const BooksEdit = () => {
     useDocumentTitle(`${translate("books.titles.edit")} | ${config.title}`)
 
     useEffect(() => {
-        formProps?.form?.setFieldsValue({ updated_at: dayjs() })
+        formProps?.form?.setFieldsValue({ updated_at: dayjs().tz('Asia/Tokyo') })
+        console.log(formProps?.form)
     }, [formProps?.form])
 
     return (
@@ -52,6 +58,21 @@ export const BooksEdit = () => {
                     ]}
                     getValueProps={(value) => ({
                         value: value ? dayjs(value) : undefined,
+                    })}
+                >
+                    <DatePicker />
+                </Form.Item>
+                <Form.Item
+                    label={translate("books.fields.updated_at")}
+                    name={["updated_at"]}
+                    hidden
+                    rules={[
+                        {
+                            required: true,
+                        },
+                    ]}
+                    getValueProps={(value) => ({
+                        value: dayjs().tz('Asia/Tokyo')
                     })}
                 >
                     <DatePicker />
