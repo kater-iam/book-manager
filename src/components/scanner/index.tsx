@@ -8,7 +8,7 @@ import Quagga from "quagga";
 
 export const Scanner = (props: any) => {
     const { onDetected } = props;
-
+        
     useEffect(() => {
         Quagga.init(config, (err: any) => {
             if (err) {

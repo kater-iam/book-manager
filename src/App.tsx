@@ -85,15 +85,14 @@ function App() {
               </Route>
 
             </Route>
-
-            <Route index element={<WelcomePage />} />
+            
             <Route
               element={
                 <Authenticated key="authenticated-outer" fallback={<Outlet />}>
                   <NavigateToResource />
                 </Authenticated>
               }>
-              <Route path="/login" element={<AuthPage type="login" />} />
+              <Route path="/" element={<AuthPage type="login" />} />
               <Route path="/register" element={<AuthPage type="register" />} />
               <Route path="/forgot-password" element={<AuthPage type="forgotPassword" />} />
               <Route path="/update-password" element={<AuthPage type="updatePassword" />} />
