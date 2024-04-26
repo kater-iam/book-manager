@@ -3,6 +3,8 @@ import { useTable, List, EditButton, ShowButton, DateField, DeleteButton } from 
 import { Table, Space } from "antd";
 import { useDocumentTitle } from "@refinedev/react-router-v6";
 import { config } from "@/config";
+import { Search } from "@/components/search";
+import { IBook } from "@/interfaces";
 
 export const BooksList = () => {
     const translate = useTranslate();
@@ -18,54 +20,60 @@ export const BooksList = () => {
                     order: 'desc',
                 }
             ]
-        }        
+        }
     });
 
     return (
-        <List>
-            <Table {...tableProps} sticky={true} scroll={{ x: 600 }} rowKey="id">
-                <Table.Column
-                    dataIndex="name"
-                    title={translate("books.fields.name")}
-                />
-                <Table.Column
-                    dataIndex={["updated_at"]}
-                    title={translate("books.fields.updated_at")}
-                    render={(value: any) => <DateField value={value} format="YYYY.MM.DD" />}
-                    width={120}
-                />
-                <Table.Column
-                    dataIndex={["created_at"]}
-                    title={translate("books.fields.created_at")}
-                    render={(value: any) => <DateField value={value} format="YYYY.MM.DD" />}
-                    width={120}
-                />
-                <Table.Column
-                    title={translate("table.actions")}
-                    dataIndex="actions"
-                    width={120}
-                    fixed="right"
-                    render={(_, record: BaseRecord) => (
-                        <Space>
-                            <EditButton
-                                hideText
-                                size="small"
-                                recordItemId={record.id}
-                            />
-                            <ShowButton
-                                hideText
-                                size="small"
-                                recordItemId={record.id}
-                            />
-                            <DeleteButton
-                                hideText
-                                size="small"
-                                recordItemId={record.id}
-                            />
-                        </Space>
-                    )}
-                />
-            </Table>
-        </List>
+        <>
+            <div style={{ marginBottom: 12 }}>
+                <Search<IBook> resource="books" searchTarget="name" />
+            </div>
+            
+            <List>
+                <Table {...tableProps} sticky={true} scroll={{ x: 600 }} rowKey="id">
+                    <Table.Column
+                        dataIndex="name"
+                        title={translate("books.fields.name")}
+                    />
+                    <Table.Column
+                        dataIndex={["updated_at"]}
+                        title={translate("books.fields.updated_at")}
+                        render={(value: any) => <DateField value={value} format="YYYY.MM.DD" />}
+                        width={120}
+                    />
+                    <Table.Column
+                        dataIndex={["created_at"]}
+                        title={translate("books.fields.created_at")}
+                        render={(value: any) => <DateField value={value} format="YYYY.MM.DD" />}
+                        width={120}
+                    />
+                    <Table.Column
+                        title={translate("table.actions")}
+                        dataIndex="actions"
+                        width={120}
+                        fixed="right"
+                        render={(_, record: BaseRecord) => (
+                            <Space>
+                                <EditButton
+                                    hideText
+                                    size="small"
+                                    recordItemId={record.id}
+                                />
+                                <ShowButton
+                                    hideText
+                                    size="small"
+                                    recordItemId={record.id}
+                                />
+                                <DeleteButton
+                                    hideText
+                                    size="small"
+                                    recordItemId={record.id}
+                                />
+                            </Space>
+                        )}
+                    />
+                </Table>
+            </List>
+        </>
     );
 };
