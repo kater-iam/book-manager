@@ -55,7 +55,7 @@ const authProvider: AuthBindings = {
     return {
       success: false,
       error: {
-        message: "Login failed",
+        message: "ログインに失敗しました",
         name: "Invalid email or password",
       },
     };
@@ -180,14 +180,12 @@ const authProvider: AuthBindings = {
     };
   },
   onError: async (error) => {
-    console.error(error);
     return { error };
   },
   check: async () => {
     try {
       const { data } = await supabaseClient.auth.getSession();
       const { session } = data;
-
       if (!session) {
         return {
           authenticated: false,

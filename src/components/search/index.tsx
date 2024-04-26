@@ -1,4 +1,4 @@
-import { useList } from "@refinedev/core"
+import { useList, useTranslate, useTranslation } from "@refinedev/core"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { AutoComplete, Input } from "antd"
@@ -16,7 +16,8 @@ export const Search = <T extends { id: number, name: string }>({ resource, searc
     const [value, setValue] = useState<string>("")
     const [options, setOptions] = useState<IOptions[]>([])
     const [debounceValue] = useDebounce(value, 400)
-
+    const translate = useTranslate();
+    
     const { refetch } = useList<T>({
         resource: resource,
         filters: [{ field: searchTarget, operator: "contains", value: value }],
@@ -50,7 +51,7 @@ export const Search = <T extends { id: number, name: string }>({ resource, searc
         >
             <Input
                 size="large"
-                placeholder="検索する"
+                placeholder={`${translate(`${resource}.${resource}`)}を検索`}
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 suffix={<SearchOutlined />}

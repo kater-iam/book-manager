@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { Edit, useForm } from "@refinedev/antd";
+import { DeleteButton, Edit, useForm } from "@refinedev/antd";
 import { Form, Input, DatePicker } from "antd";
 import { useTranslate } from "@refinedev/core";
 import dayjs from "dayjs";
-import { useDocumentTitle } from "@refinedev/react-router-v6";
-import { config } from "@/config";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { useNavigate } from "react-router-dom";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -15,16 +14,19 @@ export const BooksEdit = () => {
     const translate = useTranslate();
     const { formProps, saveButtonProps, queryResult } = useForm();
     const booksData = queryResult?.data?.data;
-
-    useDocumentTitle(`${translate("books.titles.edit")} | ${config.title}`)
+    const navigate = useNavigate()
 
     useEffect(() => {
         formProps?.form?.setFieldsValue({ updated_at: dayjs().tz('Asia/Tokyo') })
-        console.log(formProps?.form)
     }, [formProps?.form])
 
     return (
-        <Edit saveButtonProps={saveButtonProps}>
+        <Edit saveButtonProps={saveButtonProps} footerButtons={({ defaultButtons, deleteButtonProps }) => {
+            return <>
+                {defaultButtons}
+                <DeleteButton {...deleteButtonProps} onSuccess={() => navigate("/books")} />
+            </>
+        }}>
             <Form {...formProps} layout="vertical">
                 <Form.Item
                     label={translate("books.fields.id")}

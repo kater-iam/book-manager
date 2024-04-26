@@ -1,16 +1,12 @@
 import { BaseRecord, useTranslate } from "@refinedev/core";
 import { useTable, List, EditButton, ShowButton, DateField, DeleteButton } from "@refinedev/antd";
 import { Table, Space } from "antd";
-import { useDocumentTitle } from "@refinedev/react-router-v6";
-import { config } from "@/config";
 import { Search } from "@/components/search";
 import { IBook } from "@/interfaces";
 
 export const BooksList = () => {
     const translate = useTranslate();
-
-    useDocumentTitle(`${translate("books.titles.list")} | ${config.title}`)
-
+    
     const { tableProps } = useTable({
         syncWithLocation: true,
         sorters: {

@@ -1,4 +1,15 @@
 {
+    "documentTitle": {
+        "default": "BOOK MANAGER",
+        "suffix": " | BOOK MANAGER",
+        "books": {
+            "list": "書籍 | BOOK MANAGER",
+            "show": "#{{id}} 詳細 | BOOK MANAGER",
+            "edit": "#{{id}} 編集 | BOOK MANAGER",
+            "create": "新規 | BOOK MANAGER",
+            "clone": "#{{id}} 複製 | BOOK MANAGER"
+        }
+    },
     "pages": {
         "login": {
             "title": "ログイン",
@@ -10,7 +21,8 @@
                 "password": "パスワード"
             },
             "errors": {
-                "validEmail": "メールアドレスが正しくありません"
+                "validEmail": "メールアドレスが正しくありません",
+                "requiredEmail": "必須項目"
             },
             "buttons": {
                 "submit": "作成",
@@ -56,7 +68,7 @@
             "list": "書籍一覧",
             "edit": "書籍を編集",
             "create": "書籍を追加",
-            "show": "書籍詳細",
+            "show": "書籍の詳細",
             "refresh": "書籍を更新"
         }
     },
@@ -81,13 +93,13 @@
     },
     "buttons": {
         "logout": "ログアウト",
-        "create": "書籍を追加",
-        "edit": "書籍を編集",
-        "refresh": "書籍を更新",
+        "create": "追加",
+        "edit": "編集",
+        "refresh": "更新",
+        "show": "詳細",
         "save": "保存",
         "delete": "削除",
         "cancel": "キャンセル",
         "confirm": "内容を確認ください"
     }
 }
-
