@@ -18,7 +18,7 @@ function App() {
   const i18nProvider: I18nProvider = {
     /* eslint-disable @typescript-eslint/ban-ts-comment */
     // @ts-ignore 
-    translate: (key: any, options?: any) => {
+    translate: (key: any, options?: any) => {      
       return t(key, options)
     },
     changeLocale: (lang: string) => i18n.changeLanguage(lang),
@@ -46,7 +46,7 @@ function App() {
             list: "/books",
             create: "/books/create",
             edit: "/books/edit/:id",
-            show: "/books/show/:id"
+            show: "/books/show/:id",
           }, {
             name: "lendings",
             list: "/lendings",

@@ -8,6 +8,8 @@ import {
     DateField,
 } from "@refinedev/antd";
 import { Typography } from "antd";
+import { useDocumentTitle } from "@refinedev/react-router-v6";
+import { config } from "@/config";
 
 const { Title } = Typography;
 
@@ -17,6 +19,8 @@ export const BooksShow = () => {
     const { data, isLoading } = queryResult;
 
     const record = data?.data;
+
+    useDocumentTitle(`${translate("books.titles.show")} | ${config.title}`)
 
     return (
         <Show isLoading={isLoading}>

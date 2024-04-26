@@ -3,12 +3,15 @@ import { Edit, useForm } from "@refinedev/antd";
 import { Form, Input, DatePicker } from "antd";
 import { useTranslate } from "@refinedev/core";
 import dayjs from "dayjs";
+import { useDocumentTitle } from "@refinedev/react-router-v6";
+import { config } from "@/config";
 
 export const BooksEdit = () => {
     const translate = useTranslate();
     const { formProps, saveButtonProps, queryResult } = useForm();
-
     const booksData = queryResult?.data?.data;
+
+    useDocumentTitle(`${translate("books.titles.edit")} | ${config.title}`)
 
     useEffect(() => {
         formProps?.form?.setFieldsValue({ updated_at: dayjs() })

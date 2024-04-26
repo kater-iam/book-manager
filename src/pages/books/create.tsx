@@ -4,13 +4,17 @@ import { useTranslate } from "@refinedev/core";
 import dayjs from "dayjs";
 import Scanner from "@/components/scanner";
 import { useEffect, useState } from "react";
+import { useDocumentTitle } from "@refinedev/react-router-v6";
 import axios from "axios";
+import { config } from "@/config";
 
 export const BooksCreate = () => {
     const translate = useTranslate();
     const { formProps, saveButtonProps } = useForm();
     const [isbn, setIsbn] = useState<string>("")
     const [isShowScanner, setIsShowScanner] = useState<boolean>(false)
+
+    useDocumentTitle(`${translate("books.titles.create")} | ${config.title}`)
 
     useEffect(() => {
         formProps?.form?.setFieldsValue({ updated_at: dayjs() })
@@ -40,7 +44,6 @@ export const BooksCreate = () => {
 
     return (
         <Create saveButtonProps={saveButtonProps}>
-
             {isShowScanner && <Scanner onDetected={(result: any) => setIsbn(result)} />}
 
             <ShowButton
