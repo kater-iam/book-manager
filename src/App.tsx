@@ -1,13 +1,13 @@
 import "./App.css";
 import authProvider from "./authProvider";
 
-import { Authenticated, Refine, WelcomePage, I18nProvider } from "@refinedev/core";
+import { Authenticated, Refine, I18nProvider } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import { AuthPage, Header, ThemedLayoutV2 } from "@refinedev/antd";
 import { useTranslation } from "react-i18next";
 import routerBindings, { CatchAllNavigate, DocumentTitleHandler, NavigateToResource, UnsavedChangesNotifier } from "@refinedev/react-router-v6";
 import { dataProvider, liveProvider } from "@refinedev/supabase";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { supabaseClient } from "./utility";
 import { Title } from "./components/title";
 import { BooksCreate, BooksEdit, BooksList, BooksShow } from "./pages/books";
@@ -17,8 +17,8 @@ function App() {
   const { t, i18n } = useTranslation();
   const i18nProvider: I18nProvider = {
     /* eslint-disable @typescript-eslint/ban-ts-comment */
-    // @ts-ignore
-    translate: (key: any, options?: any) => {
+    // @ts-ignore 
+    translate: (key: any, options?: any) => {      
       return t(key, options)
     },
     changeLocale: (lang: string) => i18n.changeLanguage(lang),
@@ -85,19 +85,20 @@ function App() {
               </Route>
 
             </Route>
-            
+
             <Route
               element={
                 <Authenticated key="authenticated-outer" fallback={<Outlet />}>
                   <NavigateToResource />
                 </Authenticated>
               }>
-              <Route path="/" element={<AuthPage type="login" />} />
-              <Route path="/register" element={<AuthPage type="register" />} />
-              <Route path="/forgot-password" element={<AuthPage type="forgotPassword" />} />
-              <Route path="/update-password" element={<AuthPage type="updatePassword" />} />
-            </Route>
 
+              <Route path="/" element={<AuthPage type="login" title={<Title />} />} />
+              <Route path="/login" element={<Navigate replace to="/" />} />
+              <Route path="/register" element={<AuthPage type="register" title={<Title />} />} />
+              <Route path="/forgot-password" element={<AuthPage type="forgotPassword" title={<Title />} />} />
+              <Route path="/update-password" element={<AuthPage type="updatePassword" title={<Title />} />} />
+            </Route>
 
           </Routes>
           <RefineKbar />

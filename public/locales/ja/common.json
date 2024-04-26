@@ -1,4 +1,48 @@
 {
+    "pages": {
+        "login": {
+            "title": "ログイン",
+            "signin": "ログイン",
+            "signup": "アカウント作成",
+            "divider": "oder",
+            "fields": {
+                "email": "メールアドレス",
+                "password": "パスワード"
+            },
+            "errors": {
+                "validEmail": "メールアドレスが正しくありません"
+            },
+            "buttons": {
+                "submit": "作成",
+                "forgotPassword": "パスワードをお忘れですか？",
+                "noAccount": "アカウントをお持ちですか？",
+                "rememberMe": "パスワードを記憶する",
+                "haveAccount": "アカウントを既にお持ちの方は"
+            }
+        },
+        "forgotPassword": {
+            "title": "パスワードをお忘れの方",
+            "fields": {
+                "email": "メールアドレス"
+            },
+            "buttons": {
+                "submit": "送信",
+                "haveAccount": "アカウントをお持ちですか？"
+            }
+        },
+        "register": {
+            "title": "アカウント作成",
+            "email": "メールアドレス",
+            "fields": {
+                "email": "メールアドレス",
+                "password": "パスワード"
+            },
+            "buttons": {
+                "submit": "作成",
+                "haveAccount": "アカウントを既にお持ちの方は"
+            }
+        }
+    },
     "books": {
         "books": "貸出可能書籍",
         "fields": {
@@ -42,4 +86,3 @@
         "save": "保存"
     }
 }
-
