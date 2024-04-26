@@ -31,11 +31,11 @@ export const BooksCreate = () => {
     }, [isbn, formProps?.form])
 
     const isBookIsbn = (isbn: string): boolean => {
-        // 数値にキャストできないば場合はバーコードではない
-        if (!Number(isbn)) return false
-        // 本のisbnは9から始まるみたい
-        if (!isbn.startsWith("9")) return false
-        return true
+        // 本のisbnは9と4から始まるらしい
+        if (isbn.startsWith("9") || isbn.startsWith("4")) {
+            return true
+        }
+        return false
     }
 
     return (
