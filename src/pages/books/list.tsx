@@ -18,7 +18,7 @@ export const BooksList = () => {
                     order: 'desc',
                 }
             ]
-        },
+        }        
     });
 
     return (

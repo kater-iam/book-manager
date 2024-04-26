@@ -3,7 +3,7 @@ import authProvider from "./authProvider";
 
 import { Authenticated, Refine, I18nProvider } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
-import { AuthPage, Header, ThemedLayoutV2 } from "@refinedev/antd";
+import { AuthPage, ThemedLayoutV2 } from "@refinedev/antd";
 import { useTranslation } from "react-i18next";
 import routerBindings, { CatchAllNavigate, DocumentTitleHandler, NavigateToResource, UnsavedChangesNotifier } from "@refinedev/react-router-v6";
 import { dataProvider, liveProvider } from "@refinedev/supabase";
@@ -12,13 +12,15 @@ import { supabaseClient } from "./utility";
 import { Title } from "./components/title";
 import { BooksCreate, BooksEdit, BooksList, BooksShow } from "./pages/books";
 import { LendingsCreate, LendingsEdit, LendingsList, LendingsShow } from "./pages/lendings";
+import { Header } from "./components/header";
 
 function App() {
   const { t, i18n } = useTranslation();
   const i18nProvider: I18nProvider = {
     /* eslint-disable @typescript-eslint/ban-ts-comment */
     // @ts-ignore 
-    translate: (key: any, options?: any) => {      
+    translate: (key: any, options?: any) => {
+      // console.log(key, options)
       return t(key, options)
     },
     changeLocale: (lang: string) => i18n.changeLanguage(lang),
