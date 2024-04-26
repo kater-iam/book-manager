@@ -4,7 +4,7 @@ import authProvider from "./authProvider";
 import { Authenticated, Refine, I18nProvider } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import { AuthPage, ThemedLayoutV2 } from "@refinedev/antd";
-import { initReactI18next, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import routerBindings, { CatchAllNavigate, DocumentTitleHandler, NavigateToResource, UnsavedChangesNotifier } from "@refinedev/react-router-v6";
 import { dataProvider, liveProvider } from "@refinedev/supabase";
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
@@ -20,13 +20,13 @@ function App() {
     /* eslint-disable @typescript-eslint/ban-ts-comment */
     // @ts-ignore 
     translate: (key: any, options?: any) => {
-      console.log(key, options)
+      // console.log(key, options)
       return t(key, options)
     },
     changeLocale: (lang: string) => i18n.changeLanguage(lang),
     getLocale: () => i18n.language,
   };
-  
+
   return (
     (<BrowserRouter>
       <RefineKbarProvider>

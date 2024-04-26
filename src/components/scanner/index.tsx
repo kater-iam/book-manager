@@ -8,20 +8,17 @@ import Quagga from "quagga";
 
 export const Scanner = (props: any) => {
     const { onDetected } = props;
-        
+
     useEffect(() => {
         Quagga.init(config, (err: any) => {
             if (err) {
                 console.log(err, "error msg");
             }
             Quagga.start();
-            return () => {
-                Quagga.stop()
-            }
         });
 
         //detecting boxes on stream
-        Quagga.onProcessed((result: any) => {            
+        Quagga.onProcessed((result: any) => {
             const drawingCtx = Quagga.canvas.ctx.overlay
             const drawingCanvas = Quagga.canvas.dom.overlay
 
@@ -64,6 +61,9 @@ export const Scanner = (props: any) => {
         });
 
         Quagga.onDetected(detected);
+        return () => {
+            Quagga.stop()            
+        }
         // eslint-disable-next-line
     }, []);
 

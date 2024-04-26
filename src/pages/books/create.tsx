@@ -20,6 +20,7 @@ export const BooksCreate = () => {
     useEffect(() => {
         if (!isbn) return
         if (!isBookIsbn(isbn)) return
+        setIsShowScanner(false)
 
         formProps?.form?.setFieldsValue({ isbn })
         axios
