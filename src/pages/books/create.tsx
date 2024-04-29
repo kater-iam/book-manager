@@ -52,7 +52,10 @@ export const BooksCreate = () => {
 
             <Form {...formProps} layout="vertical">
                 <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
-                    <ShowButton onClick={() => setIsShowScanner(!isShowScanner)}>
+                    <ShowButton onClick={() => {
+                        window.postMessage('OpenCamera', '*');
+                        setIsShowScanner(!isShowScanner)
+                    }}>
                         カメラ起動
                     </ShowButton>
                     <NfcButton setSerialNumber={setSerialNumber} />
