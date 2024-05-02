@@ -1,6 +1,7 @@
 import "./App.css";
 import 'react-toastify/dist/ReactToastify.css';
 import authProvider from "./authProvider";
+import AppMode from "./components/appMode";
 
 import { Authenticated, Refine, I18nProvider } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
@@ -15,6 +16,8 @@ import { BooksCreate, BooksEdit, BooksList, BooksShow } from "./pages/books";
 import { LendingsCreate, LendingsEdit, LendingsList, LendingsShow } from "./pages/lendings";
 import { Header } from "./components/header";
 import { ToastContainer } from "react-toastify";
+import { Provider } from 'react-redux'
+import { store } from './store/store'
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -30,84 +33,89 @@ function App() {
   return (
     (<BrowserRouter>
       <RefineKbarProvider>
-        <Refine
-          dataProvider={dataProvider(supabaseClient)}
-          liveProvider={liveProvider(supabaseClient)}
-          authProvider={authProvider}
-          routerProvider={routerBindings}
-          i18nProvider={i18nProvider}
-          options={{
-            syncWithLocation: true,
-            warnWhenUnsavedChanges: true,
-            useNewQueryKeys: true,
-            projectId: "45VCnM-1kez3C-I7s8dD",
-            liveMode: "auto",
-          }}
-          resources={[{
-            name: "books",
-            list: "/books",
-            create: "/books/create",
-            edit: "/books/edit/:id",
-            show: "/books/show/:id",
-          }, {
-            name: "lendings",
-            list: "/lendings",
-            create: "/lendings/create",
-            edit: "/lendings/edit/:id",
-            show: "/lendings/show/:id"
-          }]}>
-          <Routes>
+        <Provider store={store}>
+          <AppMode>
+            <Refine
+              dataProvider={dataProvider(supabaseClient)}
+              liveProvider={liveProvider(supabaseClient)}
+              authProvider={authProvider}
+              routerProvider={routerBindings}
+              i18nProvider={i18nProvider}
+              options={{
+                syncWithLocation: true,
+                warnWhenUnsavedChanges: true,
+                useNewQueryKeys: true,
+                projectId: "45VCnM-1kez3C-I7s8dD",
+                liveMode: "auto",
+              }}
+              resources={[{
+                name: "books",
+                list: "/books",
+                create: "/books/create",
+                edit: "/books/edit/:id",
+                show: "/books/show/:id",
+              }, {
+                name: "lendings",
+                list: "/lendings",
+                create: "/lendings/create",
+                edit: "/lendings/edit/:id",
+                show: "/lendings/show/:id"
+              }]}>
+              <Routes>
 
-            <Route
-              element={
-                <Authenticated
-                  key="authenticated-inner"
-                  fallback={<CatchAllNavigate to="/login" />}
+                <Route
+                  element={
+                    <>
+                      <Authenticated
+                        key="authenticated-inner"
+                        fallback={<CatchAllNavigate to="/login" />}
+                      >
+                        <ThemedLayoutV2
+                          Header={() => <Header />}
+                          Title={({ collapsed }) => <Title collapsed={collapsed} />}
+                        >
+                          <Outlet />
+                          <ToastContainer />
+                        </ThemedLayoutV2>
+                      </Authenticated>
+                    </>
+                  }
                 >
-                  <ThemedLayoutV2
-                    Header={() => <Header />}
-                    Title={({ collapsed }) => <Title collapsed={collapsed} />}
-                  >
-                    <Outlet />
-                    <ToastContainer />
-                  </ThemedLayoutV2>
-                </Authenticated>
-              }
-            >
-              <Route path="/books">
-                <Route index element={<BooksList />} />
-                <Route path="create" element={<BooksCreate />} />
-                <Route path="edit/:id" element={<BooksEdit />} />
-                <Route path="show/:id" element={<BooksShow />} />
-              </Route>
-              <Route path="/lendings">
-                <Route index element={<LendingsList />} />
-                <Route path="create" element={<LendingsCreate />} />
-                <Route path="edit/:id" element={<LendingsEdit />} />
-                <Route path="show/:id" element={<LendingsShow />} />
-              </Route>
+                  <Route path="/books">
+                    <Route index element={<BooksList />} />
+                    <Route path="create" element={<BooksCreate />} />
+                    <Route path="edit/:id" element={<BooksEdit />} />
+                    <Route path="show/:id" element={<BooksShow />} />
+                  </Route>
+                  <Route path="/lendings">
+                    <Route index element={<LendingsList />} />
+                    <Route path="create" element={<LendingsCreate />} />
+                    <Route path="edit/:id" element={<LendingsEdit />} />
+                    <Route path="show/:id" element={<LendingsShow />} />
+                  </Route>
 
-            </Route>
+                </Route>
 
-            <Route
-              element={
-                <Authenticated key="authenticated-outer" fallback={<Outlet />}>
-                  <NavigateToResource />
-                </Authenticated>
-              }>
+                <Route
+                  element={
+                    <Authenticated key="authenticated-outer" fallback={<Outlet />}>
+                      <NavigateToResource />
+                    </Authenticated>
+                  }>
 
-              <Route path="/" element={<AuthPage type="login" title={<Title />} />} />
-              <Route path="/login" element={<Navigate replace to="/" />} />
-              <Route path="/register" element={<AuthPage type="register" title={<Title />} />} />
-              <Route path="/forgot-password" element={<AuthPage type="forgotPassword" title={<Title />} />} />
-              <Route path="/update-password" element={<AuthPage type="updatePassword" title={<Title />} />} />
-            </Route>
-
-          </Routes>
-          <RefineKbar />
-          <UnsavedChangesNotifier />
-          <DocumentTitleHandler />
-        </Refine>
+                  <Route path="/" element={<AuthPage type="login" title={<Title />} />} />
+                  <Route path="/login" element={<Navigate replace to="/" />} />
+                  <Route path="/register" element={<AuthPage type="register" title={<Title />} />} />
+                  <Route path="/forgot-password" element={<AuthPage type="forgotPassword" title={<Title />} />} />
+                  <Route path="/update-password" element={<AuthPage type="updatePassword" title={<Title />} />} />
+                </Route>
+              </Routes>
+              <RefineKbar />
+              <UnsavedChangesNotifier />
+              <DocumentTitleHandler />
+            </Refine>
+          </AppMode>
+        </Provider>
       </RefineKbarProvider>
     </BrowserRouter>)
   );

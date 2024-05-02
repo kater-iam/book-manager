@@ -1,26 +1,29 @@
-import { Create, EditButton, ShowButton, useForm } from "@refinedev/antd";
-import { Form, Input } from "antd";
-import { useTranslate } from "@refinedev/core";
-import dayjs from "dayjs";
-import Scanner from "@/components/scanner";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { Create, EditButton, ShowButton, useForm } from "@refinedev/antd"
+import { Form, Input } from "antd"
+import { useTranslate } from "@refinedev/core"
+import dayjs from "dayjs"
+import Scanner from "@/components/scanner"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { useSelector } from "react-redux"
+import { RootState } from "@/store/store"
 
 declare global {
     interface Window {
-        receiveBarcode?: (barcode: string) => void;
-        receiveSerialNumber?: (tagId: string) => void;
-        BarcodeReader: { postMessage: (message: string) => void };
-        NFCReader: { postMessage: (message: string) => void };
+        receiveBarcode?: (barcode: string) => void
+        receiveSerialNumber?: (tagId: string) => void
+        BarcodeReader: { postMessage: (message: string) => void }
+        NFCReader: { postMessage: (message: string) => void }
     }
 }
 
 export const BooksCreate = () => {
-    const translate = useTranslate();
+    const translate = useTranslate()
     const { formProps, saveButtonProps } = useForm();
     const [isbn, setIsbn] = useState<string>("")
     const [isShowScanner, setIsShowScanner] = useState<boolean>(false)
     const [serialNumber, setSerialNumber] = useState<string>("")
+    const appMode = useSelector((state: RootState) => state.appMode.appMode);
 
     function receiveBarcode(isbn: string) {
         setIsbn(isbn)
@@ -64,19 +67,21 @@ export const BooksCreate = () => {
             {isShowScanner && <Scanner onDetected={(result: any) => setIsbn(result)} />}
 
             <Form {...formProps} layout="vertical">
-                <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
-                    <ShowButton onClick={() => {
-                        window.BarcodeReader.postMessage('');
-                        setIsShowScanner(!isShowScanner)
-                    }}>
-                        カメラ起動
-                    </ShowButton>
-                    <EditButton onClick={() => {
-                        window.NFCReader.postMessage('');
-                    }}>
-                        タグ読み取り
-                    </EditButton>
-                </div>
+                {appMode && (
+                    <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
+                        <ShowButton onClick={() => {
+                            window.BarcodeReader.postMessage('');
+                            setIsShowScanner(!isShowScanner)
+                        }}>
+                            カメラ起動
+                        </ShowButton>
+                        <EditButton onClick={() => {
+                            window.NFCReader.postMessage('');
+                        }}>
+                            タグ読み取り
+                        </EditButton>
+                    </div>
+                )}
 
                 <Form.Item
                     label={translate("books.fields.name")}
