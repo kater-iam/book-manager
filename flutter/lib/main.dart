@@ -7,17 +7,17 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(WebViewApp());
+  runApp(const WebViewApp());
 }
 
 class WebViewApp extends ConsumerStatefulWidget {
-  WebViewApp({Key? key}) : super(key: key);
+  const WebViewApp({super.key});
 
   @override
-  _WebViewAppState createState() => _WebViewAppState();
+  WebViewAppState createState() => WebViewAppState();
 }
 
-class _WebViewAppState extends ConsumerState<WebViewApp> {
+class WebViewAppState extends ConsumerState<WebViewApp> {
   late WebViewController _controller;
 
   @override
@@ -33,7 +33,7 @@ class _WebViewAppState extends ConsumerState<WebViewApp> {
         _controller.runJavaScript("receiveBarcode('${isbn}');");
       },
     );
-    
+
     _controller.addJavaScriptChannel(
       'NFCReader',
       onMessageReceived: (JavaScriptMessage message) async {
