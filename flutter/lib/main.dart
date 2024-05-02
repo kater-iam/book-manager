@@ -50,6 +50,7 @@ class _WebViewAppState extends ConsumerState<WebViewApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: WebViewWidget(
           controller: _controller,
         ),

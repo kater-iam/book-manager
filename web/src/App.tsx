@@ -1,4 +1,5 @@
 import "./App.css";
+import 'react-toastify/dist/ReactToastify.css';
 import authProvider from "./authProvider";
 
 import { Authenticated, Refine, I18nProvider } from "@refinedev/core";
@@ -14,16 +15,13 @@ import { BooksCreate, BooksEdit, BooksList, BooksShow } from "./pages/books";
 import { LendingsCreate, LendingsEdit, LendingsList, LendingsShow } from "./pages/lendings";
 import { Header } from "./components/header";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const { t, i18n } = useTranslation();
   const i18nProvider: I18nProvider = {
-    /* eslint-disable @typescript-eslint/ban-ts-comment */
-    // @ts-ignore 
-    translate: (key: any, options?: any) => {
+    translate: (key, options) => {
       // console.log(key, options)
-      return t(key, options)
+      return t(key, { ...options, returnObjects: false }) as string;
     },
     changeLocale: (lang: string) => i18n.changeLanguage(lang),
     getLocale: () => i18n.language,
