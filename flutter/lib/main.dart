@@ -1,68 +1,58 @@
-import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:webview/WebViewManager.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-class WebViewExample extends StatefulWidget {
-  const WebViewExample({super.key});
-
-  @override
-  State<WebViewExample> createState() => _WebViewExampleState();
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(WebViewApp());
 }
 
-class _WebViewExampleState extends State<WebViewExample> {
-  late final WebViewController _controller;
+class WebViewApp extends ConsumerStatefulWidget {
+  WebViewApp({Key? key}) : super(key: key);
 
-  /// ページURL
-  static const url = 'https://hoshizaki.co.jp/';
+  @override
+  _WebViewAppState createState() => _WebViewAppState();
+}
+
+class _WebViewAppState extends ConsumerState<WebViewApp> {
+  late WebViewController _controller;
 
   @override
   void initState() {
     super.initState();
+    _controller = WebViewManager('http://192.168.11.21:5173/').controller;
 
-    late final PlatformWebViewControllerCreationParams params;
-    params = const PlatformWebViewControllerCreationParams();
-
-    final WebViewController controller =
-        WebViewController.fromPlatformCreationParams(params);
-
-    controller
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color.fromARGB(255, 255, 255, 255))
-      ..addJavaScriptChannel(
-        'BarcodeReader',
-        onMessageReceived: (JavaScriptMessage message) async {
-          final ScanResult result = await BarcodeScanner.scan();
-          final String isbn = result.rawContent;
-          controller.runJavaScript("receiveBarcode('${isbn}');");
-        },
-      )
-      ..addJavaScriptChannel(
-        'NFCReader',
-        onMessageReceived: (JavaScriptMessage message) async {
-          NFCTag serialNumber = await FlutterNfcKit.poll(
-            timeout: const Duration(seconds: 10),
-            iosAlertMessage: "NFCタグを近づけてください",
-          );
-          await FlutterNfcKit.finish();
-          controller.runJavaScript("receiveTagId('${serialNumber.id}');");
-        },
-      )
-      ..loadRequest(Uri.parse(url));
-
-    _controller = controller;
+    _controller.addJavaScriptChannel(
+      'BarcodeReader',
+      onMessageReceived: (JavaScriptMessage message) async {
+        final ScanResult result = await BarcodeScanner.scan();
+        final String isbn = result.rawContent;
+        _controller.runJavaScript("receiveBarcode('${isbn}');");
+      },
+    );
+    _controller.addJavaScriptChannel(
+      'NFCReader',
+      onMessageReceived: (JavaScriptMessage message) async {
+        NFCTag serialNumber = await FlutterNfcKit.poll(
+          timeout: const Duration(seconds: 10),
+          iosAlertMessage: "NFCタグを近づけてください",
+        );
+        await FlutterNfcKit.finish();
+        _controller.runJavaScript("receiveSerialNumber('${serialNumber.id}');");
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          // WebViewWidget(controller: _controller),
-          Text("hoge")
-        ],
+    return MaterialApp(
+      home: Scaffold(
+        body: WebViewWidget(
+          controller: _controller,
+        ),
       ),
     );
   }
