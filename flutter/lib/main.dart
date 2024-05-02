@@ -1,8 +1,8 @@
+import 'package:BookManager/WebViewManager.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:webview/WebViewManager.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
@@ -33,6 +33,7 @@ class _WebViewAppState extends ConsumerState<WebViewApp> {
         _controller.runJavaScript("receiveBarcode('${isbn}');");
       },
     );
+    
     _controller.addJavaScriptChannel(
       'NFCReader',
       onMessageReceived: (JavaScriptMessage message) async {
