@@ -51,6 +51,13 @@ class _WebViewAppState extends ConsumerState<WebViewApp> {
     return MaterialApp(
       home: Scaffold(
         resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: SizedBox(
+            width: 30,
+            height: 30,
+            child: Image.asset('assets/logo.png'),
+          ),
+        ),
         body: WebViewWidget(
           controller: _controller,
         ),
