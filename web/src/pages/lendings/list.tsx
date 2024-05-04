@@ -1,11 +1,9 @@
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { BaseRecord, useTranslate, useMany, useUpdate, useCreate } from "@refinedev/core";
-import { useTable, List, EditButton, ShowButton, DateField, CreateButton, } from "@refinedev/antd";
+import { useTable, List, EditButton, ShowButton, DateField, CreateButton, DeleteButton, } from "@refinedev/antd";
 import { Table, Space } from "antd";
 import { supabaseClient } from "@/utility/supabaseClient";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
 
 export const LendingsList = () => {
     const translate = useTranslate();
@@ -27,8 +25,7 @@ export const LendingsList = () => {
             enabled: !!tableProps?.dataSource,
         },
     });
-
-    const appMode = useSelector((state: RootState) => state.appMode.appMode);
+    
     const [nfcId, setNfcId] = useState<string>("")
     const { mutate: update } = useUpdate()
     const { mutate: create } = useCreate()
@@ -102,11 +99,7 @@ export const LendingsList = () => {
                 </CreateButton>
             )
         }}>
-            <Table {...tableProps} rowKey="id">
-                <Table.Column
-                    dataIndex="id"
-                    title={translate("lendings.fields.id")}
-                />
+            <Table {...tableProps} sticky={true} scroll={{ x: 600 }} rowKey="id">
                 <Table.Column
                     dataIndex={["book_id"]}
                     title={translate("lendings.fields.book_id")}
@@ -123,16 +116,18 @@ export const LendingsList = () => {
                 <Table.Column
                     dataIndex={["created_at"]}
                     title={translate("lendings.fields.created_at")}
-                    render={(value: any) => <DateField value={value} />}
+                    render={(value: any) => <DateField value={value} format="YYYY.MM.DD" />}
                 />
                 <Table.Column
                     dataIndex={["returned_at"]}
                     title={translate("lendings.fields.returned_at")}
-                    render={(value: any) => <DateField value={value} />}
+                    render={(value: any) => (value ? <DateField value={value} format="YYYY.MM.DD" /> : "-")}
                 />
                 <Table.Column
                     title={translate("table.actions")}
                     dataIndex="actions"
+                    width={120}
+                    fixed="right"
                     render={(_, record: BaseRecord) => (
                         <Space>
                             <EditButton
@@ -141,6 +136,11 @@ export const LendingsList = () => {
                                 recordItemId={record.id}
                             />
                             <ShowButton
+                                hideText
+                                size="small"
+                                recordItemId={record.id}
+                            />
+                            <DeleteButton
                                 hideText
                                 size="small"
                                 recordItemId={record.id}
