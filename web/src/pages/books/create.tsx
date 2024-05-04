@@ -11,7 +11,7 @@ import { RootState } from "@/store/store"
 declare global {
     interface Window {
         receiveBarcode?: (barcode: string) => void
-        receiveSerialNumber?: (tagId: string) => void
+        receiveNfcId?: (tagId: string) => void
         BarcodeReader: { postMessage: (message: string) => void }
         NFCReader: { postMessage: (message: string) => void }
     }
@@ -22,22 +22,22 @@ export const BooksCreate = () => {
     const { formProps, saveButtonProps } = useForm();
     const [isbn, setIsbn] = useState<string>("")
     const [isShowScanner, setIsShowScanner] = useState<boolean>(false)
-    const [serialNumber, setSerialNumber] = useState<string>("")
+    const [nfcId, setNfcId] = useState<string>("")
     const appMode = useSelector((state: RootState) => state.appMode.appMode);
 
     function receiveBarcode(isbn: string) {
         setIsbn(isbn)
     }
-    function receiveSerialNumber(serialNumber: string) {
-        setSerialNumber(serialNumber)
+    function receiveNfcId(nfcId: string) {
+        setNfcId(nfcId)
     }
 
     useEffect(() => {
         window.receiveBarcode = receiveBarcode;
-        window.receiveSerialNumber = receiveSerialNumber;
+        window.receiveNfcId = receiveNfcId;
         return () => {
             delete window.receiveBarcode
-            delete window.receiveSerialNumber
+            delete window.receiveNfcId
         }
     }, [])
 
@@ -47,9 +47,9 @@ export const BooksCreate = () => {
     }, [formProps?.form])
 
     useEffect(() => {
-        if (!serialNumber) return
-        formProps?.form?.setFieldsValue({ serial_number: serialNumber })
-    }, [serialNumber, formProps?.form])
+        if (!nfcId) return
+        formProps?.form?.setFieldsValue({ nfc_id: nfcId })
+    }, [nfcId, formProps?.form])
 
     useEffect(() => {
         if (!isbn) return
@@ -98,8 +98,8 @@ export const BooksCreate = () => {
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    label={translate("books.fields.serial_number")}
-                    name={["serial_number"]}
+                    label={translate("books.fields.nfc_id")}
+                    name={["nfc_id"]}
                     rules={[{ required: true, },]}
                 >
                     <Input />

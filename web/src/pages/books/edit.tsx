@@ -91,8 +91,8 @@ export const BooksEdit = () => {
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    label={translate("books.fields.serial_number")}
-                    name={["serial_number"]}
+                    label={translate("books.fields.nfc_id")}
+                    name={["nfc_id"]}
                 >
                     <Input />
                 </Form.Item>

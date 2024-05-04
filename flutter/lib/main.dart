@@ -23,7 +23,7 @@ class WebViewAppState extends ConsumerState<WebViewApp> {
   @override
   void initState() {
     super.initState();
-    _controller = WebViewManager('http://192.168.11.21:5173/?app_mode=true').controller;
+    _controller = WebViewManager('https://main.dvxdnhk01b6k.amplifyapp.com/?app_mode=true').controller;
 
     _controller.addJavaScriptChannel(
       'BarcodeReader',
