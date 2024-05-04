@@ -42,7 +42,7 @@ class WebViewAppState extends ConsumerState<WebViewApp> {
           iosAlertMessage: "NFCタグを近づけてください",
         );
         await FlutterNfcKit.finish();
-        _controller.runJavaScript("receiveSerialNumber('${serialNumber.id}');");
+        _controller.runJavaScript("receiveNfcId('${serialNumber.id}');");
       },
     );
   }
