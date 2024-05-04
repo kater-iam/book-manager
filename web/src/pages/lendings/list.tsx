@@ -90,9 +90,9 @@ export const LendingsList = () => {
             return (
                 <CreateButton
                     onClick={() => {
-                        const nfcId = "E004015306A25FF9"
-                        setNfcId(nfcId)
-                        // window.NFCReader.postMessage(nfcId)
+                        // const nfcId = "E004015306A25FF9"
+                        // setNfcId(nfcId)
+                        window.NFCReader.postMessage(nfcId)
                     }}
                 >
                     借りる・返却する
