@@ -4,6 +4,9 @@ import { BaseRecord, useTranslate, useMany, useUpdate, useCreate } from "@refine
 import { useTable, List, EditButton, ShowButton, DateField, CreateButton, DeleteButton, } from "@refinedev/antd";
 import { Table, Space } from "antd";
 import { supabaseClient } from "@/utility/supabaseClient";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 export const LendingsList = () => {
     const translate = useTranslate();
@@ -25,10 +28,11 @@ export const LendingsList = () => {
             enabled: !!tableProps?.dataSource,
         },
     });
-    
+
     const [nfcId, setNfcId] = useState<string>("")
     const { mutate: update } = useUpdate()
     const { mutate: create } = useCreate()
+    const appMode = useSelector((state: RootState) => state.appMode.appMode);
 
     function receiveNfcId(nfcId: string) {
         setNfcId(nfcId)
@@ -56,6 +60,7 @@ export const LendingsList = () => {
                         returned_at: dayjs()
                     }
                 })
+                toast.success("返却しました")
             }
 
             // レコードが存在しない、または返却日が含まれている場合は新規作成
@@ -67,6 +72,7 @@ export const LendingsList = () => {
                         created_at: dayjs()
                     }
                 })
+                toast.success("借りました")
             }
 
             setNfcId('')
@@ -90,9 +96,14 @@ export const LendingsList = () => {
             return (
                 <CreateButton
                     onClick={() => {
-                        // const nfcId = "E004015306A25FF9"
-                        // setNfcId(nfcId)
-                        window.NFCReader.postMessage(nfcId)
+                        if (appMode) {
+                            // アプリモードの場合はNFCを読み取る
+                            window.NFCReader.postMessage(nfcId)
+                        } else {
+                            // アプリモードでない場合はハードコードしたNFCを使う
+                            const nfcId = "E004015306A25FF9"
+                            setNfcId(nfcId)
+                        }
                     }}
                 >
                     借りる・返却する
